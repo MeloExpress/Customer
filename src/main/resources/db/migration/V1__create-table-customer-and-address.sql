@@ -1,6 +1,6 @@
 create table CUSTOMER(
 
-    CUSTOMER_ID bigint not null auto_increment,
+    CUSTOMER_ID serial not null,
     COMPANY_NAME varchar(100) not null,
     CNPJ varchar(14) not null unique,
     STATE_RESGISTRATION varchar(12) not null unique,
@@ -14,7 +14,7 @@ create table CUSTOMER(
 
 create table ADDRESS(
 
-    ADDRESS_ID bigint not null auto_increment,
+    ADDRESS_ID serial not null,
     CUSTOMER_ID bigint not null,
     ZIP_CODE varchar(8) not null,
     STREET varchar(100) not null,
