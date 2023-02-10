@@ -26,7 +26,7 @@ public class AddressController {
     public ResponseEntity cadastrar (@RequestBody AddressRegisterDTO addressRegisterDTO, UriComponentsBuilder uriBuilder){
         var address = new Address(addressRegisterDTO);
         addressDAO.save(address);
-        var uri = uriBuilder.path("/address{id}").buildAndExpand(address.getStreet()).toUri();
+        var uri = uriBuilder.path("/address{id}").buildAndExpand(address.getAddressId()).toUri();
         return ResponseEntity.created(uri).body(new AddressDetailsDTO(address));
 
     }
