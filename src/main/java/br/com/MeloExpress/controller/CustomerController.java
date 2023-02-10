@@ -1,9 +1,9 @@
 package br.com.MeloExpress.controller;
 
-import br.com.MeloExpress.controller.dto.CustomerDetailsDTO;
+import br.com.MeloExpress.dto.CustomerDetailsDTO;
 import br.com.MeloExpress.domain.Customer;
-import br.com.MeloExpress.controller.dto.CustomerRegisterDTO;
-import br.com.MeloExpress.controller.dao.CustomerDAO;
+import br.com.MeloExpress.dto.CustomerRegisterDTO;
+import br.com.MeloExpress.dao.CustomerDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;

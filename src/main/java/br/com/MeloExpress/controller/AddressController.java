@@ -1,8 +1,8 @@
 package br.com.MeloExpress.controller;
 
-import br.com.MeloExpress.controller.dao.AddressDAO;
-import br.com.MeloExpress.controller.dto.AddressRegisterDTO;
-import br.com.MeloExpress.controller.dto.AddressDetailsDTO;
+import br.com.MeloExpress.dao.AddressDAO;
+import br.com.MeloExpress.dto.AddressRegisterDTO;
+import br.com.MeloExpress.dto.AddressDetailsDTO;
 import br.com.MeloExpress.domain.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

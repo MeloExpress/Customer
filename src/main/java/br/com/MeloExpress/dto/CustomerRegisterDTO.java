@@ -1,4 +1,4 @@
-package br.com.MeloExpress.controller.dto;
+package br.com.MeloExpress.dto;
 
 import br.com.MeloExpress.domain.Customer;
 

@@ -1,4 +1,4 @@
-package br.com.MeloExpress.controller.dao;
+package br.com.MeloExpress.dao;
 
 import br.com.MeloExpress.domain.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;

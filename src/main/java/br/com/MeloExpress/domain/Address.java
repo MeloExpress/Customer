@@ -1,6 +1,6 @@
 package br.com.MeloExpress.domain;
 
-import br.com.MeloExpress.controller.dto.AddressRegisterDTO;
+import br.com.MeloExpress.dto.AddressRegisterDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -26,6 +26,7 @@ public class Address {
     private String city;
     private String state;
     private String pointReference;
+
 
     public Address (AddressRegisterDTO addressRegisterDTO) {
         this.zipCode = addressRegisterDTO.zipCode();

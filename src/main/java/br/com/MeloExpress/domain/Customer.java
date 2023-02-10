@@ -1,13 +1,12 @@
 package br.com.MeloExpress.domain;
 
 
-import br.com.MeloExpress.controller.dto.CustomerRegisterDTO;
+import br.com.MeloExpress.dto.CustomerRegisterDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @NoArgsConstructor
