@@ -7,6 +7,7 @@ import br.com.MeloExpress.controller.dao.CustomerDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class CustomerController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar (@RequestBody  CustomerRegisterDTO customerRegisterDTO, UriComponentsBuilder uriBuilder){
+    public ResponseEntity cadastrar (@RequestBody  @Validated CustomerRegisterDTO customerRegisterDTO, UriComponentsBuilder uriBuilder){
         var customer = new Customer(customerRegisterDTO);
         customerDAO.save(customer);
         var uri = uriBuilder.path("/customer/{id}").buildAndExpand(customer.getCustomerId()).toUri();

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @NoArgsConstructor
@@ -19,7 +20,6 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
-
     private String companyName;
     private String cnpj;
     private String stateRegistration;
@@ -27,7 +27,6 @@ public class Customer {
     private String phone;
     private String responsible;
 
-    private Address address;
 
     public Customer (CustomerRegisterDTO customerRegisterDTO) {
         this.companyName = customerRegisterDTO.companyName();
@@ -35,7 +34,7 @@ public class Customer {
         this.stateRegistration = customerRegisterDTO.stateRegistration();
         this.email = customerRegisterDTO.email();
         this.phone = customerRegisterDTO.phone();
-        this.responsible = customerRegisterDTO.Responsible();
+        this.responsible = customerRegisterDTO.responsible();
     }
 
 }

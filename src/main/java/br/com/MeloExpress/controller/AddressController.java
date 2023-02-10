@@ -20,12 +20,13 @@ public class AddressController {
     @Autowired
     public AddressDAO addressDAO;
 
+
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar (@RequestBody AddressRegisterDTO addressRegisterDTO, UriComponentsBuilder uriBuilder){
         var address = new Address(addressRegisterDTO);
         addressDAO.save(address);
-        var uri = uriBuilder.path("/address{id}").buildAndExpand(address.getAddressId()).toUri();
+        var uri = uriBuilder.path("/address{id}").buildAndExpand(address.getStreet()).toUri();
         return ResponseEntity.created(uri).body(new AddressDetailsDTO(address));
 
     }
