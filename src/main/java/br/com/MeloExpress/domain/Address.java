@@ -2,12 +2,10 @@ package br.com.MeloExpress.domain;
 
 import br.com.MeloExpress.dto.AddressRegisterDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "addressId")
@@ -18,6 +16,10 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long addressId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
+    private Customer customer;
     private String zipCode;
     private String street;
     private String number;
@@ -29,6 +31,7 @@ public class Address {
 
 
     public Address (AddressRegisterDTO addressRegisterDTO) {
+        this.customer = new Customer();
         this.zipCode = addressRegisterDTO.zipCode();
         this.street = addressRegisterDTO.street();
         this.number = addressRegisterDTO.number();
@@ -38,4 +41,5 @@ public class Address {
         this.state = addressRegisterDTO.state();
         this.pointReference = addressRegisterDTO.pointReference();
     }
+
 }
