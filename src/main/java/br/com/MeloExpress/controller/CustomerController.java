@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("customer")
+@RequestMapping("customers")
 public class CustomerController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class CustomerController {
     public ResponseEntity cadastrar (@RequestBody  @Validated CustomerRegisterDTO customerRegisterDTO, UriComponentsBuilder uriBuilder){
         var customer = new Customer(customerRegisterDTO);
         customerDAO.save(customer);
-        var uri = uriBuilder.path("/customer/{id}").buildAndExpand(customer.getCustomerId()).toUri();
+        var uri = uriBuilder.path("/customers/{id}").buildAndExpand(customer.getCustomerId()).toUri();
         return ResponseEntity.created(uri).body(new CustomerDetailsDTO(customer));
 
     }
