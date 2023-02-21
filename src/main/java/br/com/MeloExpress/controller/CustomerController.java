@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("customer")
@@ -30,5 +30,59 @@ public class CustomerController {
         return ResponseEntity.created(uri).body(new CustomerDetailsDTO(customer));
 
     }
+
+    @GetMapping
+    public List<Customer> getAllCustomers() {
+        return customerDAO.findAll();
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable(value = "id") Long customerId) {
+        Optional<Customer> customer = customerDAO.findById(customerId);
+        if(customer.isPresent()) {
+            return ResponseEntity.ok().body(customer.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable(value = "id") Long customerId,
+                                                   @RequestBody Customer customerDetails) {
+        Optional<Customer> customer = customerDAO.findById(customerId);
+        if(customer.isPresent()) {
+            customer.get().setCompanyName(customerDetails.getCompanyName());
+            customer.get().setEmail(customerDetails.getEmail());
+            Customer updatedCustomer = customerDAO.save(customer.get());
+            return ResponseEntity.ok(updatedCustomer);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteCustomer(@PathVariable(value = "id") Long customerId) {
+        Optional<Customer> customer = customerDAO.findById(customerId);
+        if(customer.isPresent()) {
+            customer.get().setActive(false);
+            customerDAO.save(customer.get());
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("{id}/reactivate")
+    public ResponseEntity reactivateCustomer(@PathVariable(value = "id") Long customerId) {
+        Optional<Customer> customer = customerDAO.findById(customerId);
+        if(customer.isPresent()) {
+            customer.get().setActive(true);
+            customerDAO.save(customer.get());
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }

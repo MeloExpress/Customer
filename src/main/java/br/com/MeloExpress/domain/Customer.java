@@ -24,6 +24,7 @@ public class Customer {
     private String email;
     private String phone;
     private String responsible;
+    private boolean active=true;
 
 
     public Customer (CustomerRegisterDTO customerRegisterDTO) {
@@ -33,6 +34,7 @@ public class Customer {
         this.email = customerRegisterDTO.email();
         this.phone = customerRegisterDTO.phone();
         this.responsible = customerRegisterDTO.responsible();
+        this.active = customerRegisterDTO.active();
     }
 
 }

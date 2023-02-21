@@ -9,6 +9,7 @@ String cnpj,
 String stateRegistration,
 String email,
 String phone,
-String responsible
+String responsible,
+boolean active
 
 ) {}
