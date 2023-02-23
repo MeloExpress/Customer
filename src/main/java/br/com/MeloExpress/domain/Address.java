@@ -1,6 +1,5 @@
 package br.com.MeloExpress.domain;
 
-import br.com.MeloExpress.dto.AddressDetailsDTO;
 import br.com.MeloExpress.dto.AddressRegisterDTO;
 import br.com.MeloExpress.dto.AddressUpdateDTO;
 import jakarta.persistence.*;
@@ -31,27 +30,27 @@ public class Address {
     private String pointReference;
 
 
-    public void updateFromDTO(AddressUpdateDTO addressRegisterDTO) {
-        if (addressRegisterDTO.getStreet() != null) {
-            this.street = addressRegisterDTO.getStreet();
+    public void updateFromDTO(AddressUpdateDTO addressUpdateDTO) {
+        if (addressUpdateDTO.getStreet() != null) {
+            this.street = addressUpdateDTO.getStreet();
         }
-        if (addressRegisterDTO.getNumber() != null) {
-            this.number = addressRegisterDTO.getNumber();
+        if (addressUpdateDTO.getNumber() != null) {
+            this.number = addressUpdateDTO.getNumber();
         }
-        if (addressRegisterDTO.getComplements() != null) {
-            this.complements = addressRegisterDTO.getComplements();
+        if (addressUpdateDTO.getComplements() != null) {
+            this.complements = addressUpdateDTO.getComplements();
         }
-        if (addressRegisterDTO.getDistrict() != null) {
-            this.district = addressRegisterDTO.getDistrict();
+        if (addressUpdateDTO.getDistrict() != null) {
+            this.district = addressUpdateDTO.getDistrict();
         }
-        if (addressRegisterDTO.getCity() != null) {
-            this.city = addressRegisterDTO.getCity();
+        if (addressUpdateDTO.getCity() != null) {
+            this.city = addressUpdateDTO.getCity();
         }
-        if (addressRegisterDTO.getState() != null) {
-            this.state = addressRegisterDTO.getState();
+        if (addressUpdateDTO.getState() != null) {
+            this.state = addressUpdateDTO.getState();
         }
-        if (addressRegisterDTO.getZipCode() != null) {
-            this.zipCode = addressRegisterDTO.getZipCode();
+        if (addressUpdateDTO.getZipCode() != null) {
+            this.zipCode = addressUpdateDTO.getZipCode();
         }
     }
     public Address (AddressRegisterDTO addressRegisterDTO) {

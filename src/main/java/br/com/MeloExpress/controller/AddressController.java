@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,10 +26,10 @@ public class AddressController {
     @Autowired
     public CustomerDAO customerDAO;
 
-    // CREATE
+
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar (@PathVariable Long customerId, @RequestBody AddressRegisterDTO addressRegisterDTO, UriComponentsBuilder uriBuilder){
+    public ResponseEntity createAddress (@PathVariable Long customerId, @RequestBody AddressRegisterDTO addressRegisterDTO, UriComponentsBuilder uriBuilder){
         var customer = customerDAO.findById(customerId).orElse(null);
         if (customer == null) {
             return ResponseEntity.notFound().build();
@@ -51,21 +52,28 @@ public class AddressController {
         return ResponseEntity.ok().body(addressDetailsDTOList);
     }
 
-//    @PutMapping("/{addressId}")
-//    @Transactional
-//    public ResponseEntity<AddressDetailsDTO> updateAddress(@PathVariable Long customerId, @PathVariable Long addressId, @RequestBody AddressUpdateDTO addressUpdateDTO) {
-//        var customer = customerDAO.findById(customerId).orElse(null);
-//        if (customer == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        var address = addressDAO.findByIdAndCustomer(addressId, customerId);
-//        if (address.isEmpty()) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        address.get().updateFromDTO(addressUpdateDTO);
-//        addressDAO.save(address.get());
-//        return ResponseEntity.ok(new AddressDetailsDTO(address.get()));
-//    }
+    @PutMapping("/{addressId}")
+    @Transactional
+    public ResponseEntity<AddressDetailsDTO> updateAddress(
+            @PathVariable Long customerId,
+            @PathVariable Long addressId,
+            @RequestBody AddressUpdateDTO addressUpdateDTO
+    ) {
+        var customer = customerDAO.findById(customerId).orElse(null);
+        if (customer == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Optional<Address> optionalAddress = addressDAO.findByIdAndCustomer(addressId, customerId);
+        if (optionalAddress.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Address address = optionalAddress.get();
+        address.updateFromDTO(addressUpdateDTO);
+        addressDAO.save(address);
+        return ResponseEntity.ok(new AddressDetailsDTO(address));
+    }
 
 }
 
