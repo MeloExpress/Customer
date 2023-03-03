@@ -73,4 +73,15 @@ public class AddressService {
         return new AddressDetailsDTO(address);
     }
 
+    @Transactional
+    public void deleteAddress(Long customerId, Long addressId) throws CustomerNotFoundException, AddressNotFoundException {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found with id " + customerId));
+
+        Address address = addressRepository.findByAddressIdAndCustomerCustomerIdAndCustomerActiveTrue(addressId, customerId)
+                .orElseThrow(() -> new AddressNotFoundException("Address not found with id " + addressId + " for customer " + customerId));
+
+        addressRepository.delete(address);
+    }
+
 }
