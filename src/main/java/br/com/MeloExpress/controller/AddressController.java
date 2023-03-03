@@ -52,6 +52,18 @@ public class AddressController {
         }
     }
 
+    @GetMapping("/{addressId}")
+    public ResponseEntity<AddressDetailsDTO> getAddressDetailsByCustomerAndAddressId(@PathVariable Long customerId, @PathVariable Long addressId) {
+        try {
+            AddressDetailsDTO addressDetailsDTO = addressService.getAddressDetailsByCustomerAndAddressId(customerId, addressId);
+            return ResponseEntity.ok().body(addressDetailsDTO);
+        } catch (CustomerNotFoundException | AddressNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+
 }
 
 

@@ -41,15 +41,10 @@ public class AddressService {
     }
 
     public List<AddressDetailsDTO> getAddressesByCustomer(Long customerId) throws CustomerNotFoundException {
-        Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Cliente com o ID " + customerId + " não encontrado."));
-
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Cliente com o ID " + customerId + " não encontrado."));
         List<Address> addresses = addressRepository.findByCustomer(customer);
-
-        List<AddressDetailsDTO> addressDetailsDTOList = addresses.stream()
-                .map(AddressDetailsDTO::new)
-                .collect(Collectors.toList());
-
-        return addressDetailsDTOList;
+        return addresses.stream().map(AddressDetailsDTO::new).collect(Collectors.toList());
     }
 
     @Transactional
@@ -59,13 +54,23 @@ public class AddressService {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException("Cliente com o ID " + customerId + " não encontrado."));
 
-        Address address = addressRepository.findByIdAndCustomer(addressId, customerId)
+        Address address = addressRepository.findByAddressIdAndCustomerCustomerIdAndCustomerActiveTrue(addressId, customer.getCustomerId())
                 .orElseThrow(() -> new AddressNotFoundException("Endereço com o ID " + addressId + " não encontrado para o cliente com o ID " + customerId));
 
         address.updateFromDTO(addressUpdateDTO);
         Address updatedAddress = addressRepository.save(address);
 
         return new AddressDetailsDTO(updatedAddress);
+    }
+
+    public AddressDetailsDTO getAddressDetailsByCustomerAndAddressId(Long customerId, Long addressId) throws CustomerNotFoundException, AddressNotFoundException {
+        Customer customer = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found with id " + customerId));
+
+        Address address = addressRepository.findByAddressIdAndCustomerCustomerIdAndCustomerActiveTrue(addressId, customer.getCustomerId())
+                .orElseThrow(() -> new AddressNotFoundException("Address not found with id " + addressId + " for customer " + customerId));
+
+        return new AddressDetailsDTO(address);
     }
 
 }
