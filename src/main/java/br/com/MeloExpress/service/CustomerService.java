@@ -1,5 +1,6 @@
 package br.com.MeloExpress.service;
 
+import br.com.MeloExpress.dao.AddressRepository;
 import br.com.MeloExpress.dao.CustomerRepository;
 import br.com.MeloExpress.domain.Customer;
 import br.com.MeloExpress.dto.CustomerDetailsDTO;
@@ -15,10 +16,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class CustomerService {
 
     @Autowired
     private final CustomerRepository customerRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -46,7 +51,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public CustomerDetailsDTO cadastrar(CustomerRegisterDTO customerRegisterDTO, UriComponentsBuilder uriBuilder) {
+    public CustomerDetailsDTO registerCustomer(CustomerRegisterDTO customerRegisterDTO, UriComponentsBuilder uriBuilder) {
         var customer = new Customer(customerRegisterDTO);
         customerRepository.save(customer);
         var uri = uriBuilder.path("/customers/{customerId}").buildAndExpand(customer.getCustomerId()).toUri();
@@ -84,4 +89,5 @@ public class CustomerService {
             throw new CustomerNotFoundException("Cliente com o ID " + customerId + " não encontrado.");
         }
     }
+
 }

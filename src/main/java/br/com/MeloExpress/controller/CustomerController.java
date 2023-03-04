@@ -1,5 +1,6 @@
 package br.com.MeloExpress.controller;
 
+
 import br.com.MeloExpress.dto.CustomerDetailsDTO;
 import br.com.MeloExpress.domain.Customer;
 import br.com.MeloExpress.dto.CustomerRegisterDTO;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +27,8 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<CustomerDetailsDTO> createCustomer(@RequestBody @Validated CustomerRegisterDTO customerRegisterDTO, UriComponentsBuilder uriBuilder) {
-        var customerDetailsDTO = customerService.cadastrar(customerRegisterDTO, uriBuilder);
-        var uri = uriBuilder.path("/customers/{customerId}").buildAndExpand(customerDetailsDTO.customerId()).toUri();
+        var customerDetailsDTO = customerService.registerCustomer(customerRegisterDTO, uriBuilder);
+        var uri = uriBuilder.path("/customers/{}").buildAndExpand(customerDetailsDTO.customerId()).toUri();
         return ResponseEntity.created(uri).body(customerDetailsDTO);
     }
 

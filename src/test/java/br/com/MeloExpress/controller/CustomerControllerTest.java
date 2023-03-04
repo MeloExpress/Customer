@@ -36,7 +36,7 @@ class CustomerControllerTest {
         when(customerRepository.save(any(Customer.class))).thenReturn(savedCustomer);
 
         CustomerController controller = new CustomerController(new CustomerService(customerRepository));
-        controller.customerService = new CustomerService();
+        controller.customerService = new CustomerService(customerRepository);
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.newInstance();
         ResponseEntity response = controller.createCustomer(customerRegisterDTO, uriBuilder);

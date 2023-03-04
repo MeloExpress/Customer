@@ -1,7 +1,5 @@
 package br.com.MeloExpress.dto;
 
-import br.com.MeloExpress.domain.Customer;
-
 public record CustomerRegisterDTO(
 
 String companyName,
