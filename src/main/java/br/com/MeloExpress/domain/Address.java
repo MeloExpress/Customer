@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "addressId")
 @Table(name = "address")
-@Entity(name = "Address")
+@Entity(name = "address")
 public class Address {
 
     @Id
