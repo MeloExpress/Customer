@@ -2,7 +2,9 @@ package br.com.MeloExpress.service;
 
 import br.com.MeloExpress.dao.AddressRepository;
 import br.com.MeloExpress.dao.CustomerRepository;
+import br.com.MeloExpress.domain.Address;
 import br.com.MeloExpress.domain.Customer;
+import br.com.MeloExpress.dto.AddressRegisterDTO;
 import br.com.MeloExpress.dto.CustomerDetailsDTO;
 import br.com.MeloExpress.dto.CustomerRegisterDTO;
 import br.com.MeloExpress.exceptions.CustomerNotFoundException;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,10 +54,16 @@ public class CustomerService {
     }
 
     @Transactional
-    public CustomerDetailsDTO registerCustomer(CustomerRegisterDTO customerRegisterDTO, UriComponentsBuilder uriBuilder) {
-        var customer = new Customer(customerRegisterDTO);
-        customerRepository.save(customer);
-        var uri = uriBuilder.path("/customers/{customerId}").buildAndExpand(customer.getCustomerId()).toUri();
+    public CustomerDetailsDTO registerCustomer(CustomerRegisterDTO customerRegisterDTO) {
+        Customer customer = new Customer(customerRegisterDTO);
+        List<Address> addresses = new ArrayList<>();
+        for (AddressRegisterDTO addressRegisterDTO : customerRegisterDTO.addresses()) {
+            Address address = new Address(addressRegisterDTO);
+            address.setCustomer(customer);
+            addresses.add(address);
+        }
+        customer.setAddresses(addresses);
+        customer = customerRepository.save(customer);
         return new CustomerDetailsDTO(customer);
     }
 

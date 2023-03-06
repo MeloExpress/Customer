@@ -1,5 +1,7 @@
 package br.com.MeloExpress.dto;
 
+import java.util.List;
+
 public record CustomerRegisterDTO(
 
 String companyName,
@@ -8,6 +10,7 @@ String stateRegistration,
 String email,
 String phone,
 String responsible,
-boolean active
+boolean active,
+List<AddressRegisterDTO> addresses
 
 ) {}

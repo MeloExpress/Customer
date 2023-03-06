@@ -5,6 +5,9 @@ import br.com.MeloExpress.dto.CustomerRegisterDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,6 +28,8 @@ public class Customer {
     private String phone;
     private String responsible;
     private boolean active=true;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> addresses = new ArrayList<>();
 
 
     public Customer (CustomerRegisterDTO customerRegisterDTO) {

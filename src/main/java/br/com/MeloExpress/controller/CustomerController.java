@@ -27,7 +27,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<CustomerDetailsDTO> createCustomer(@RequestBody @Validated CustomerRegisterDTO customerRegisterDTO, UriComponentsBuilder uriBuilder) {
-        var customerDetailsDTO = customerService.registerCustomer(customerRegisterDTO, uriBuilder);
+        var customerDetailsDTO = customerService.registerCustomer(customerRegisterDTO);
         var uri = uriBuilder.path("/customers/{}").buildAndExpand(customerDetailsDTO.customerId()).toUri();
         return ResponseEntity.created(uri).body(customerDetailsDTO);
     }
