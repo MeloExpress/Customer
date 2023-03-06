@@ -17,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Transactional
 @Service
 public class AddressService {
 
@@ -29,7 +29,7 @@ public class AddressService {
         this.addressRepository = addressRepository;
     }
 
-    @Transactional
+
     public ResponseEntity<AddressDetailsDTO> createAddress(Long customerId, AddressRegisterDTO addressRegisterDTO, UriComponentsBuilder uriBuilder) throws CustomerNotFoundException {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Cliente não encontrado."));
         Address address = new Address(addressRegisterDTO);
@@ -47,7 +47,7 @@ public class AddressService {
         return addresses.stream().map(AddressDetailsDTO::new).collect(Collectors.toList());
     }
 
-    @Transactional
+
     public AddressDetailsDTO updateAddress(Long customerId, Long addressId, AddressUpdateDTO addressUpdateDTO)
             throws CustomerNotFoundException, AddressNotFoundException {
 
@@ -73,7 +73,7 @@ public class AddressService {
         return new AddressDetailsDTO(address);
     }
 
-    @Transactional
+
     public void deleteAddress(Long customerId, Long addressId) throws CustomerNotFoundException, AddressNotFoundException {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found with id " + customerId));

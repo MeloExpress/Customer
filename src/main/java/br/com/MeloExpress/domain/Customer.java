@@ -1,6 +1,7 @@
 package br.com.MeloExpress.domain;
 
 
+import br.com.MeloExpress.dto.AddressDetailsDTO;
 import br.com.MeloExpress.dto.CustomerRegisterDTO;
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,7 +31,6 @@ public class Customer {
     private boolean active=true;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
-
 
     public Customer (CustomerRegisterDTO customerRegisterDTO) {
         this.companyName = customerRegisterDTO.companyName();
