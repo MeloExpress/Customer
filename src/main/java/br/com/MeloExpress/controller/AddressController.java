@@ -66,7 +66,7 @@ public class AddressController {
     public ResponseEntity<?> deleteAddress(@PathVariable Long customerId, @PathVariable Long addressId) {
         try {
             addressService.deleteAddress(customerId, addressId);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok().build();
         } catch (CustomerNotFoundException | AddressNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
