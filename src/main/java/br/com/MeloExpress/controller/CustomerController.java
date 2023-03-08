@@ -3,6 +3,7 @@ package br.com.MeloExpress.controller;
 
 import br.com.MeloExpress.dto.CustomerDetailsDTO;
 import br.com.MeloExpress.domain.Customer;
+import br.com.MeloExpress.dto.CustomerDetailsFindAllDTO;
 import br.com.MeloExpress.dto.CustomerRegisterDTO;
 import br.com.MeloExpress.exceptions.CustomerNotFoundException;
 import br.com.MeloExpress.service.CustomerService;
@@ -34,7 +35,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<CustomerDetailsDTO> getAllCustomers() {
+    public List<CustomerDetailsFindAllDTO> getAllCustomers() {
         return customerService.findAll();
     }
 

@@ -5,6 +5,7 @@ import br.com.MeloExpress.domain.Address;
 import br.com.MeloExpress.domain.Customer;
 import br.com.MeloExpress.dto.AddressRegisterDTO;
 import br.com.MeloExpress.dto.CustomerDetailsDTO;
+import br.com.MeloExpress.dto.CustomerDetailsFindAllDTO;
 import br.com.MeloExpress.dto.CustomerRegisterDTO;
 import br.com.MeloExpress.exceptions.CustomerNotFoundException;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -34,10 +35,10 @@ public class CustomerService {
 
 
 
-    public List<CustomerDetailsDTO> findAll() {
+    public List<CustomerDetailsFindAllDTO> findAll() {
         List<Customer> customers = customerRepository.findAll();
         return customers.stream()
-                .map(CustomerDetailsDTO::new)
+                .map(CustomerDetailsFindAllDTO::new)
                 .collect(Collectors.toList());
     }
 
