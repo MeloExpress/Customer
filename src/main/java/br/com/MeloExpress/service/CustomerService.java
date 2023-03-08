@@ -3,13 +3,8 @@ package br.com.MeloExpress.service;
 import br.com.MeloExpress.dao.CustomerRepository;
 import br.com.MeloExpress.domain.Address;
 import br.com.MeloExpress.domain.Customer;
-import br.com.MeloExpress.dto.AddressRegisterDTO;
-import br.com.MeloExpress.dto.CustomerDetailsDTO;
-import br.com.MeloExpress.dto.CustomerDetailsFindAllDTO;
-import br.com.MeloExpress.dto.CustomerRegisterDTO;
+import br.com.MeloExpress.dto.*;
 import br.com.MeloExpress.exceptions.CustomerNotFoundException;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,29 +24,43 @@ public class CustomerService {
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
-    public Optional<Customer> getCustomerById(Long customerId) {
-        return customerRepository.findById(customerId);
+
+
+
+
+    public Optional<CustomerDetailsFindDTO> findById(Long customerId) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
+        if (optionalCustomer.isPresent()) {
+            CustomerDetailsFindDTO customerDetails = new CustomerDetailsFindDTO(optionalCustomer.get());
+            return Optional.of(customerDetails);
+        } else {
+            return Optional.empty();
+        }
     }
 
 
 
-    public List<CustomerDetailsFindAllDTO> findAll() {
+    public List<CustomerDetailsFindDTO> findAll() {
         List<Customer> customers = customerRepository.findAll();
         return customers.stream()
-                .map(CustomerDetailsFindAllDTO::new)
+                .map(CustomerDetailsFindDTO::new)
                 .collect(Collectors.toList());
     }
 
 
-    public Customer updateCustomer(Long customerId, Customer customerDetails) {
+    public Optional<CustomerDetailsFindDTO> updateCustomer(Long customerId, CustomerDetailsUpdateDTO customerDetails) {
         Optional<Customer> optionalCustomer = customerRepository.findById(customerId);
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
-            customer.setCompanyName(customerDetails.getCompanyName());
-            customer.setEmail(customerDetails.getEmail());
-            return customerRepository.save(customer);
+            customer.setCompanyName(customerDetails.companyName());
+            customer.setEmail(customerDetails.email());
+            customer.setPhone(customerDetails.phone());
+            customer.setResponsible(customerDetails.responsible());
+            Customer updatedCustomer = customerRepository.save(customer);
+            CustomerDetailsFindDTO customerDetailsDTO = new CustomerDetailsFindDTO(updatedCustomer);
+            return Optional.of(customerDetailsDTO);
         } else {
-            throw new EntityNotFoundException("Cliente não encontrado com o ID: " + customerId);
+            return Optional.empty();
         }
     }
 

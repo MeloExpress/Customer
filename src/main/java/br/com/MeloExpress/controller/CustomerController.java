@@ -3,11 +3,11 @@ package br.com.MeloExpress.controller;
 
 import br.com.MeloExpress.dto.CustomerDetailsDTO;
 import br.com.MeloExpress.domain.Customer;
-import br.com.MeloExpress.dto.CustomerDetailsFindAllDTO;
+import br.com.MeloExpress.dto.CustomerDetailsFindDTO;
+import br.com.MeloExpress.dto.CustomerDetailsUpdateDTO;
 import br.com.MeloExpress.dto.CustomerRegisterDTO;
 import br.com.MeloExpress.exceptions.CustomerNotFoundException;
 import br.com.MeloExpress.service.CustomerService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -35,32 +35,38 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<CustomerDetailsFindAllDTO> getAllCustomers() {
+    public List<CustomerDetailsFindDTO> getAllCustomers() {
         return customerService.findAll();
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable(value = "id") Long customerId) {
-        Optional<Customer> customer = customerService.getCustomerById(customerId);
-        if(customer.isPresent()) {
-            return ResponseEntity.ok().body(customer.get());
+    @GetMapping("/{customerId}")
+    public ResponseEntity<CustomerDetailsFindDTO> getCustomerById(@PathVariable Long customerId) {
+        Optional<CustomerDetailsFindDTO> optionalCustomer = customerService.findById(customerId);
+        if (optionalCustomer.isPresent()) {
+            CustomerDetailsFindDTO customerDetails = optionalCustomer.get();
+            return ResponseEntity.ok(customerDetails);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable(value = "id") Long customerId,
-                                                   @RequestBody Customer customerDetails) {
-        Customer updatedCustomer = customerService.updateCustomer(customerId, customerDetails);
-        return ResponseEntity.ok(updatedCustomer);
+    @PutMapping("/{customerId}")
+    public ResponseEntity<CustomerDetailsFindDTO> updateCustomer(
+            @PathVariable Long customerId,
+            @RequestBody CustomerDetailsUpdateDTO customerDetails) {
+        Optional<CustomerDetailsFindDTO> optionalCustomerDetails = customerService.updateCustomer(customerId, customerDetails);
+        if (optionalCustomerDetails.isPresent()) {
+            return ResponseEntity.ok(optionalCustomerDetails.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         try {
             customerService.deleteCustomer(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok().build();
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
