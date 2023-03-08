@@ -1,7 +1,5 @@
 package br.com.MeloExpress.dto;
 
-import lombok.Getter;
-import lombok.Setter;
 
 public record AddressRegisterDTO(
 

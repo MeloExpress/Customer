@@ -6,6 +6,7 @@ import br.com.MeloExpress.domain.Customer;
 import br.com.MeloExpress.dto.CustomerRegisterDTO;
 import br.com.MeloExpress.exceptions.CustomerNotFoundException;
 import br.com.MeloExpress.service.CustomerService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -33,7 +34,7 @@ public class CustomerController {
     }
 
     @GetMapping
-    public List<Customer> getAllCustomers() {
+    public List<CustomerDetailsDTO> getAllCustomers() {
         return customerService.findAll();
     }
 

@@ -1,11 +1,10 @@
 package br.com.MeloExpress.domain;
 
 
-import br.com.MeloExpress.dto.AddressDetailsDTO;
+
 import br.com.MeloExpress.dto.CustomerRegisterDTO;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
 

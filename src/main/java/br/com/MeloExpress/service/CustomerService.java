@@ -1,6 +1,5 @@
 package br.com.MeloExpress.service;
 
-import br.com.MeloExpress.dao.AddressRepository;
 import br.com.MeloExpress.dao.CustomerRepository;
 import br.com.MeloExpress.domain.Address;
 import br.com.MeloExpress.domain.Customer;
@@ -8,15 +7,17 @@ import br.com.MeloExpress.dto.AddressRegisterDTO;
 import br.com.MeloExpress.dto.CustomerDetailsDTO;
 import br.com.MeloExpress.dto.CustomerRegisterDTO;
 import br.com.MeloExpress.exceptions.CustomerNotFoundException;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -24,20 +25,20 @@ public class CustomerService {
 
     @Autowired
     private final CustomerRepository customerRepository;
-
-    @Autowired
-    private AddressRepository addressRepository;
-
     public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
-
     public Optional<Customer> getCustomerById(Long customerId) {
         return customerRepository.findById(customerId);
     }
 
-    public List<Customer> findAll() {
-        return customerRepository.findAll();
+
+
+    public List<CustomerDetailsDTO> findAll() {
+        List<Customer> customers = customerRepository.findAll();
+        return customers.stream()
+                .map(CustomerDetailsDTO::new)
+                .collect(Collectors.toList());
     }
 
 
