@@ -3,7 +3,7 @@ create table CUSTOMER(
     CUSTOMER_ID serial not null,
     COMPANY_NAME varchar(100) not null,
     CNPJ varchar(14) not null unique,
-    STATE_RESGISTRATION varchar(12) not null unique,
+    STATE_REGISTRATION varchar(12) not null unique,
     EMAIL varchar(100) not null,
     PHONE varchar(100) not null,
     RESPONSIBLE varchar(100) not null,
