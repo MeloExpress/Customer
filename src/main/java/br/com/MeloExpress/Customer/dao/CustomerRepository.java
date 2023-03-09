@@ -1,6 +1,6 @@
-package br.com.MeloExpress.dao;
+package br.com.MeloExpress.Customer.dao;
 
-import br.com.MeloExpress.domain.Customer;
+import br.com.MeloExpress.Customer.domain.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

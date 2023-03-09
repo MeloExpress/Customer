@@ -1,10 +1,10 @@
-package br.com.MeloExpress;
+package br.com.MeloExpress.Customer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MeloExpressApplicationTests {
+class CustomerApplicationTests {
 
 	@Test
 	void contextLoads() {

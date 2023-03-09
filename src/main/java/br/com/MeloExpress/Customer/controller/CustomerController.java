@@ -1,13 +1,12 @@
-package br.com.MeloExpress.controller;
+package br.com.MeloExpress.Customer.controller;
 
 
-import br.com.MeloExpress.dto.CustomerDetailsDTO;
-import br.com.MeloExpress.domain.Customer;
-import br.com.MeloExpress.dto.CustomerDetailsFindDTO;
-import br.com.MeloExpress.dto.CustomerDetailsUpdateDTO;
-import br.com.MeloExpress.dto.CustomerRegisterDTO;
-import br.com.MeloExpress.exceptions.CustomerNotFoundException;
-import br.com.MeloExpress.service.CustomerService;
+import br.com.MeloExpress.Customer.dto.CustomerDetailsDTO;
+import br.com.MeloExpress.Customer.dto.CustomerDetailsFindDTO;
+import br.com.MeloExpress.Customer.dto.CustomerDetailsUpdateDTO;
+import br.com.MeloExpress.Customer.dto.CustomerRegisterDTO;
+import br.com.MeloExpress.Customer.exceptions.CustomerNotFoundException;
+import br.com.MeloExpress.Customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

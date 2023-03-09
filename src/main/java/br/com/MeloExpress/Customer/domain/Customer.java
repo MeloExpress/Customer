@@ -1,8 +1,8 @@
-package br.com.MeloExpress.domain;
+package br.com.MeloExpress.Customer.domain;
 
 
 
-import br.com.MeloExpress.dto.CustomerRegisterDTO;
+import br.com.MeloExpress.Customer.dto.CustomerRegisterDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;

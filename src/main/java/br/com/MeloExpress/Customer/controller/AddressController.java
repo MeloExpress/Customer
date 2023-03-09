@@ -1,12 +1,12 @@
-package br.com.MeloExpress.controller;
+package br.com.MeloExpress.Customer.controller;
 
 
-import br.com.MeloExpress.dto.AddressRegisterDTO;
-import br.com.MeloExpress.dto.AddressDetailsDTO;
-import br.com.MeloExpress.dto.AddressUpdateDTO;
-import br.com.MeloExpress.exceptions.AddressNotFoundException;
-import br.com.MeloExpress.exceptions.CustomerNotFoundException;
-import br.com.MeloExpress.service.AddressService;
+import br.com.MeloExpress.Customer.dto.AddressDetailsDTO;
+import br.com.MeloExpress.Customer.dto.AddressRegisterDTO;
+import br.com.MeloExpress.Customer.dto.AddressUpdateDTO;
+import br.com.MeloExpress.Customer.exceptions.AddressNotFoundException;
+import br.com.MeloExpress.Customer.exceptions.CustomerNotFoundException;
+import br.com.MeloExpress.Customer.service.AddressService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;

@@ -1,14 +1,14 @@
-package br.com.MeloExpress.service;
+package br.com.MeloExpress.Customer.service;
 
-import br.com.MeloExpress.dao.AddressRepository;
-import br.com.MeloExpress.dao.CustomerRepository;
-import br.com.MeloExpress.domain.Address;
-import br.com.MeloExpress.domain.Customer;
-import br.com.MeloExpress.dto.AddressDetailsDTO;
-import br.com.MeloExpress.dto.AddressRegisterDTO;
-import br.com.MeloExpress.dto.AddressUpdateDTO;
-import br.com.MeloExpress.exceptions.AddressNotFoundException;
-import br.com.MeloExpress.exceptions.CustomerNotFoundException;
+import br.com.MeloExpress.Customer.dao.AddressRepository;
+import br.com.MeloExpress.Customer.dao.CustomerRepository;
+import br.com.MeloExpress.Customer.domain.Address;
+import br.com.MeloExpress.Customer.dto.AddressDetailsDTO;
+import br.com.MeloExpress.Customer.dto.AddressRegisterDTO;
+import br.com.MeloExpress.Customer.dto.AddressUpdateDTO;
+import br.com.MeloExpress.Customer.exceptions.AddressNotFoundException;
+import br.com.MeloExpress.Customer.exceptions.CustomerNotFoundException;
+import br.com.MeloExpress.Customer.domain.Customer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

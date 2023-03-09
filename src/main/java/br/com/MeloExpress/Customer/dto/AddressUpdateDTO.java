@@ -1,4 +1,4 @@
-package br.com.MeloExpress.dto;
+package br.com.MeloExpress.Customer.dto;
 
 import lombok.Getter;
 import lombok.Setter;
