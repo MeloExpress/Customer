@@ -1,4 +1,4 @@
-package br.com.MeloExpress.dto;
+package br.com.MeloExpress.Customer.dto;
 
 
 public record AddressRegisterDTO(

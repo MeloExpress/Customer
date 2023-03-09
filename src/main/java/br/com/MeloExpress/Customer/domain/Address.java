@@ -1,7 +1,7 @@
-package br.com.MeloExpress.domain;
+package br.com.MeloExpress.Customer.domain;
 
-import br.com.MeloExpress.dto.AddressRegisterDTO;
-import br.com.MeloExpress.dto.AddressUpdateDTO;
+import br.com.MeloExpress.Customer.dto.AddressRegisterDTO;
+import br.com.MeloExpress.Customer.dto.AddressUpdateDTO;
 import jakarta.persistence.*;
 import lombok.*;
 

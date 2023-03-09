@@ -1,4 +1,4 @@
-package br.com.MeloExpress.exceptions;
+package br.com.MeloExpress.Customer.exceptions;
 
 public class AddressNotFoundException extends RuntimeException {
 

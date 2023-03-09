@@ -1,6 +1,6 @@
-package br.com.MeloExpress.dto;
+package br.com.MeloExpress.Customer.dto;
 
-import br.com.MeloExpress.domain.Address;
+import br.com.MeloExpress.Customer.domain.Address;
 
 public record AddressDetailsDTO(
         Long customerId,
