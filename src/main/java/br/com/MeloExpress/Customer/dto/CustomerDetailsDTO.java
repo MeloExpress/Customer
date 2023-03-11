@@ -3,10 +3,12 @@ package br.com.MeloExpress.Customer.dto;
 import br.com.MeloExpress.Customer.domain.Customer;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public record CustomerDetailsDTO(
         Long customerId,
+        UUID customerCode,
         String companyName,
         String cnpj,
         String stateRegistration,
@@ -16,6 +18,7 @@ public record CustomerDetailsDTO(
 
     public CustomerDetailsDTO (Customer customer){
         this(customer.getCustomerId(),
+                customer.getCustomerCode(),
                 customer.getCompanyName(),
                 customer.getCnpj(),
                 customer.getStateRegistration(),

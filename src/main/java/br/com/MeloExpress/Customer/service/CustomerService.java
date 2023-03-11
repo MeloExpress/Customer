@@ -1,6 +1,6 @@
 package br.com.MeloExpress.Customer.service;
 
-import br.com.MeloExpress.Customer.dao.CustomerRepository;
+import br.com.MeloExpress.Customer.repository.CustomerRepository;
 import br.com.MeloExpress.Customer.dto.*;
 import br.com.MeloExpress.Customer.exceptions.CustomerNotFoundException;
 import br.com.MeloExpress.Customer.domain.Address;
@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,6 +67,7 @@ public class CustomerService {
     @Transactional
     public CustomerDetailsDTO registerCustomer(CustomerRegisterDTO customerRegisterDTO) {
         Customer customer = new Customer(customerRegisterDTO);
+        customer.setCustomerCode(UUID.randomUUID());
         List<Address> addresses = new ArrayList<>();
         for (AddressRegisterDTO addressRegisterDTO : customerRegisterDTO.addresses()) {
             Address address = new Address(addressRegisterDTO);

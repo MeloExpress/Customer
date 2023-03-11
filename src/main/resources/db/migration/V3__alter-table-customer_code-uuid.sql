@@ -1,0 +1,1 @@
+ALTER TABLE customer ADD COLUMN customer_code UUID DEFAULT gen_random_uuid();

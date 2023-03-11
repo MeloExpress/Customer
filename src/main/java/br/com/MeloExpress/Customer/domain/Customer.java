@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -30,6 +31,8 @@ public class Customer {
     private boolean active=true;
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
+    @Column(name = "customer_code")
+    private UUID customerCode;
 
     public Customer (CustomerRegisterDTO customerRegisterDTO) {
         this.companyName = customerRegisterDTO.companyName();
@@ -39,6 +42,7 @@ public class Customer {
         this.phone = customerRegisterDTO.phone();
         this.responsible = customerRegisterDTO.responsible();
         this.active = customerRegisterDTO.active();
+        this.customerCode = UUID.randomUUID();
     }
 
 }

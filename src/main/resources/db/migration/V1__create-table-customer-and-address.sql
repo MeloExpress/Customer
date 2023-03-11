@@ -1,4 +1,4 @@
-create table CUSTOMER(
+create table public.CUSTOMER(
 
     CUSTOMER_ID serial not null,
     COMPANY_NAME varchar(100) not null,
@@ -12,7 +12,7 @@ create table CUSTOMER(
 
 );
 
-create table ADDRESS(
+create table public.ADDRESS(
 
     ADDRESS_ID serial not null,
     CUSTOMER_ID bigint not null,

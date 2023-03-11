@@ -1,7 +1,7 @@
 package br.com.MeloExpress.Customer.service;
 
-import br.com.MeloExpress.Customer.dao.AddressRepository;
-import br.com.MeloExpress.Customer.dao.CustomerRepository;
+import br.com.MeloExpress.Customer.repository.AddressRepository;
+import br.com.MeloExpress.Customer.repository.CustomerRepository;
 import br.com.MeloExpress.Customer.domain.Address;
 import br.com.MeloExpress.Customer.dto.AddressDetailsDTO;
 import br.com.MeloExpress.Customer.dto.AddressRegisterDTO;
@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 @Transactional
 @Service
@@ -33,6 +34,7 @@ public class AddressService {
     public ResponseEntity<AddressDetailsDTO> createAddress(Long customerId, AddressRegisterDTO addressRegisterDTO, UriComponentsBuilder uriBuilder) throws CustomerNotFoundException {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Cliente não encontrado."));
         Address address = new Address(addressRegisterDTO);
+        address.setAddressCode(UUID.randomUUID());
         address.setCustomer(customer);
         addressRepository.save(address);
         URI uri = uriBuilder.path("/customers/{customerId}/addresses/{addressId}")

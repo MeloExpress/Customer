@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("customers")
@@ -28,6 +29,7 @@ public class CustomerController {
 
     @PostMapping
     public ResponseEntity<CustomerDetailsDTO> createCustomer(@RequestBody @Validated CustomerRegisterDTO customerRegisterDTO, UriComponentsBuilder uriBuilder) {
+        customerRegisterDTO.customerCode();
         var customerDetailsDTO = customerService.registerCustomer(customerRegisterDTO);
         var uri = uriBuilder.path("/customers/{}").buildAndExpand(customerDetailsDTO.customerId()).toUri();
         return ResponseEntity.created(uri).body(customerDetailsDTO);

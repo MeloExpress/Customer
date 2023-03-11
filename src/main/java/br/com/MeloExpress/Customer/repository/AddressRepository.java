@@ -1,4 +1,4 @@
-package br.com.MeloExpress.Customer.dao;
+package br.com.MeloExpress.Customer.repository;
 
 import br.com.MeloExpress.Customer.domain.Address;
 import br.com.MeloExpress.Customer.domain.Customer;
