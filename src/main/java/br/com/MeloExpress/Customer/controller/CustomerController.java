@@ -8,6 +8,7 @@ import br.com.MeloExpress.Customer.dto.CustomerRegisterDTO;
 import br.com.MeloExpress.Customer.exceptions.CustomerNotFoundException;
 import br.com.MeloExpress.Customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,16 @@ public class CustomerController {
     @GetMapping
     public List<CustomerDetailsFindDTO> getAllCustomers() {
         return customerService.findAll();
+    }
+
+    @GetMapping("/code/{customerCode}")
+    public ResponseEntity<CustomerDetailsFindDTO> findByCode(@PathVariable UUID customerCode) {
+        Optional<CustomerDetailsFindDTO> optionalCustomerDetails = customerService.findByCode(customerCode);
+        if (optionalCustomerDetails.isPresent()) {
+            return ResponseEntity.ok(optionalCustomerDetails.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @GetMapping("/{customerId}")

@@ -38,6 +38,16 @@ public class CustomerService {
         }
     }
 
+    public Optional<CustomerDetailsFindDTO> findByCode(UUID customerCode) {
+        Optional<Customer> optionalCustomer = customerRepository.findByCustomerCode(customerCode);
+        if (optionalCustomer.isPresent()) {
+            CustomerDetailsFindDTO customerDetails = new CustomerDetailsFindDTO(optionalCustomer.get());
+            return Optional.of(customerDetails);
+        } else {
+            return Optional.empty();
+        }
+    }
+
 
 
     public List<CustomerDetailsFindDTO> findAll() {
