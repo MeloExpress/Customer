@@ -42,13 +42,9 @@ public class CustomerController {
     }
 
     @GetMapping("/code/{customerCode}")
-    public ResponseEntity<CustomerDetailsFindDTO> findByCode(@PathVariable UUID customerCode) {
-        Optional<CustomerDetailsFindDTO> optionalCustomerDetails = customerService.findByCode(customerCode);
-        if (optionalCustomerDetails.isPresent()) {
-            return ResponseEntity.ok(optionalCustomerDetails.get());
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    public ResponseEntity<CustomerDetailsFindDTO> findCustomerByCode(@PathVariable UUID customerCode) {
+        Optional<CustomerDetailsFindDTO> optionalCustomerDetails = customerService.findCustomerByCode(customerCode);
+        return optionalCustomerDetails.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @GetMapping("/{customerId}")
@@ -67,11 +63,7 @@ public class CustomerController {
             @PathVariable Long customerId,
             @RequestBody CustomerDetailsUpdateDTO customerDetails) {
         Optional<CustomerDetailsFindDTO> optionalCustomerDetails = customerService.updateCustomer(customerId, customerDetails);
-        if (optionalCustomerDetails.isPresent()) {
-            return ResponseEntity.ok(optionalCustomerDetails.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return optionalCustomerDetails.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

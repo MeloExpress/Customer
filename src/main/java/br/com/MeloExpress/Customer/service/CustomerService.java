@@ -38,7 +38,7 @@ public class CustomerService {
         }
     }
 
-    public Optional<CustomerDetailsFindDTO> findByCode(UUID customerCode) {
+    public Optional<CustomerDetailsFindDTO> findCustomerByCode(UUID customerCode) {
         Optional<Customer> optionalCustomer = customerRepository.findByCustomerCode(customerCode);
         if (optionalCustomer.isPresent()) {
             CustomerDetailsFindDTO customerDetails = new CustomerDetailsFindDTO(optionalCustomer.get());
