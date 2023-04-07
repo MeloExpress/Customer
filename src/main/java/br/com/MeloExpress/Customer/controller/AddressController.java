@@ -4,13 +4,17 @@ package br.com.MeloExpress.Customer.controller;
 import br.com.MeloExpress.Customer.dto.AddressDetailsDTO;
 import br.com.MeloExpress.Customer.dto.AddressRegisterDTO;
 import br.com.MeloExpress.Customer.dto.AddressUpdateDTO;
+import br.com.MeloExpress.Customer.dto.CustomerDetailsFindDTO;
 import br.com.MeloExpress.Customer.exceptions.AddressNotFoundException;
 import br.com.MeloExpress.Customer.exceptions.CustomerNotFoundException;
 import br.com.MeloExpress.Customer.service.AddressService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -35,6 +39,16 @@ public class AddressController {
             return ResponseEntity.ok().body(addressDetailsDTOList);
         } catch (CustomerNotFoundException e) {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/code/{addressCode}")
+    public ResponseEntity<AddressDetailsDTO> findByCode(@PathVariable UUID addressCode) {
+        Optional<AddressDetailsDTO> optionalAddressDetails = addressService.findByAddressCode(addressCode);
+        if (optionalAddressDetails.isPresent()) {
+            return ResponseEntity.ok(optionalAddressDetails.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 

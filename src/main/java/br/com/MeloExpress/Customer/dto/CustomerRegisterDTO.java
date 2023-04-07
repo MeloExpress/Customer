@@ -1,6 +1,7 @@
 package br.com.MeloExpress.Customer.dto;
 
 import java.util.List;
+import java.util.UUID;
 
 public record CustomerRegisterDTO(
 
@@ -11,6 +12,7 @@ public record CustomerRegisterDTO(
     String phone,
     String responsible,
     boolean active,
-    List<AddressRegisterDTO> addresses
+    List<AddressRegisterDTO> addresses,
+    UUID customerCode
 
 ) {}

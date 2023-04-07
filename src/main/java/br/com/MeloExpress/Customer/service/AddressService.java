@@ -1,7 +1,8 @@
 package br.com.MeloExpress.Customer.service;
 
-import br.com.MeloExpress.Customer.dao.AddressRepository;
-import br.com.MeloExpress.Customer.dao.CustomerRepository;
+import br.com.MeloExpress.Customer.dto.CustomerDetailsFindDTO;
+import br.com.MeloExpress.Customer.repository.AddressRepository;
+import br.com.MeloExpress.Customer.repository.CustomerRepository;
 import br.com.MeloExpress.Customer.domain.Address;
 import br.com.MeloExpress.Customer.dto.AddressDetailsDTO;
 import br.com.MeloExpress.Customer.dto.AddressRegisterDTO;
@@ -16,6 +17,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 @Transactional
 @Service
@@ -33,11 +36,22 @@ public class AddressService {
     public ResponseEntity<AddressDetailsDTO> createAddress(Long customerId, AddressRegisterDTO addressRegisterDTO, UriComponentsBuilder uriBuilder) throws CustomerNotFoundException {
         Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new CustomerNotFoundException("Cliente não encontrado."));
         Address address = new Address(addressRegisterDTO);
+        address.setAddressCode(UUID.randomUUID());
         address.setCustomer(customer);
         addressRepository.save(address);
         URI uri = uriBuilder.path("/customers/{customerId}/addresses/{addressId}")
                 .buildAndExpand(customerId, address.getAddressId()).toUri();
         return ResponseEntity.created(uri).body(new AddressDetailsDTO(address));
+    }
+
+    public Optional<AddressDetailsDTO> findByAddressCode(UUID addressCode) {
+        Optional<Address> optionalAddress = addressRepository.findByAddressCode(addressCode);
+        if (optionalAddress.isPresent()) {
+            AddressDetailsDTO addressDetails = new AddressDetailsDTO(optionalAddress.get());
+            return Optional.of(addressDetails);
+        } else {
+            return Optional.empty();
+        }
     }
 
     public List<AddressDetailsDTO> getAddressesByCustomer(Long customerId) throws CustomerNotFoundException {

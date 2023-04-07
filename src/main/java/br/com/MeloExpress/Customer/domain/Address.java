@@ -5,6 +5,8 @@ import br.com.MeloExpress.Customer.dto.AddressUpdateDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,6 +19,8 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long addressId;
+    @Column(name = "address_code")
+    private UUID addressCode;
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
@@ -52,9 +56,11 @@ public class Address {
         if (addressUpdateDTO.getZipCode() != null) {
             this.zipCode = addressUpdateDTO.getZipCode();
         }
+
     }
     public Address (AddressRegisterDTO addressRegisterDTO) {
         this.customer = new Customer();
+        this.addressCode = UUID.randomUUID();
         this.zipCode = addressRegisterDTO.zipCode();
         this.street = addressRegisterDTO.street();
         this.number = addressRegisterDTO.number();

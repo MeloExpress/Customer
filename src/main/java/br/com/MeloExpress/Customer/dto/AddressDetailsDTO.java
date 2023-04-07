@@ -2,8 +2,11 @@ package br.com.MeloExpress.Customer.dto;
 
 import br.com.MeloExpress.Customer.domain.Address;
 
+import java.util.UUID;
+
 public record AddressDetailsDTO(
         Long customerId,
+        UUID addressCode,
         Long addressId,
         String zipCode,
         String street,
@@ -16,6 +19,7 @@ public record AddressDetailsDTO(
 
     public AddressDetailsDTO (Address address) {
         this (address.getCustomer().getCustomerId(),
+                address.getAddressCode(),
                 address.getAddressId(),
                 address.getZipCode(),
                 address.getStreet(),
