@@ -8,6 +8,7 @@ import br.com.MeloExpress.Customer.domain.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +83,18 @@ public class CustomerService {
         for (AddressRegisterDTO addressRegisterDTO : customerRegisterDTO.addresses()) {
             Address address = new Address(addressRegisterDTO);
             address.setCustomer(customer);
+
+            String cep = addressRegisterDTO.zipCode();
+            RestTemplate restTemplate = new RestTemplate();
+            String viaCepUrl = "https://viacep.com.br/ws/" + cep + "/json/";
+            ViaCepDTO viaCepDTO = restTemplate.getForObject(viaCepUrl, ViaCepDTO.class);
+
+            address.setZipCode(viaCepDTO.cep());
+            address.setStreet(viaCepDTO.logradouro());
+            address.setCity(viaCepDTO.localidade());
+            address.setState(viaCepDTO.uf());
+            address.setDistrict(viaCepDTO.bairro());
+
             addresses.add(address);
         }
         customer.setAddresses(addresses);
