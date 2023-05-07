@@ -17,6 +17,8 @@ public record CustomerDetailsDTO(
         String responsible,
         List<AddressDetailsDTO> addresses) {
 
+
+
     public CustomerDetailsDTO (Customer customer){
         this(customer.getCustomerId(),
                 customer.getCustomerCode(),
