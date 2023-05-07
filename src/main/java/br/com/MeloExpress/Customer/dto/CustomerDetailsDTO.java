@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public record CustomerDetailsDTO(
         Long customerId,
         UUID customerCode,
+        String active,
         String companyName,
         String cnpj,
         String stateRegistration,
@@ -19,6 +20,7 @@ public record CustomerDetailsDTO(
     public CustomerDetailsDTO (Customer customer){
         this(customer.getCustomerId(),
                 customer.getCustomerCode(),
+                String.valueOf(customer.isActive()),
                 customer.getCompanyName(),
                 customer.getCnpj(),
                 customer.getStateRegistration(),

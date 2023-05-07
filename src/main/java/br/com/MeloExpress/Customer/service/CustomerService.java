@@ -5,6 +5,7 @@ import br.com.MeloExpress.Customer.dto.*;
 import br.com.MeloExpress.Customer.exceptions.CustomerNotFoundException;
 import br.com.MeloExpress.Customer.domain.Address;
 import br.com.MeloExpress.Customer.domain.Customer;
+import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class CustomerService {
 
     public Optional<CustomerDetailsFindDTO> findCustomerByCode(UUID customerCode) {
         Optional<Customer> optionalCustomer = customerRepository.findByCustomerCode(customerCode);
-        if (optionalCustomer.isPresent()) {
+        if (optionalCustomer.isPresent() && optionalCustomer.get().isActive()) {
             CustomerDetailsFindDTO customerDetails = new CustomerDetailsFindDTO(optionalCustomer.get());
             return Optional.of(customerDetails);
         } else {
@@ -79,6 +80,7 @@ public class CustomerService {
     public CustomerDetailsDTO registerCustomer(CustomerRegisterDTO customerRegisterDTO) {
         Customer customer = new Customer(customerRegisterDTO);
         customer.setCustomerCode(UUID.randomUUID());
+        customer.setActive(true);
         List<Address> addresses = new ArrayList<>();
         for (AddressRegisterDTO addressRegisterDTO : customerRegisterDTO.addresses()) {
             Address address = new Address(addressRegisterDTO);
@@ -89,11 +91,21 @@ public class CustomerService {
             String viaCepUrl = "https://viacep.com.br/ws/" + cep + "/json/";
             ViaCepDTO viaCepDTO = restTemplate.getForObject(viaCepUrl, ViaCepDTO.class);
 
+            if(StringUtils.isBlank(viaCepDTO.logradouro())) {
+                address.setStreet(addressRegisterDTO.street());
+            } else {
+                address.setStreet(viaCepDTO.logradouro());
+            }
+
+            if(StringUtils.isBlank(viaCepDTO.bairro())) {
+                address.setDistrict(addressRegisterDTO.district());
+            } else {
+                address.setDistrict(viaCepDTO.bairro());
+            }
+
             address.setZipCode(viaCepDTO.cep());
-            address.setStreet(viaCepDTO.logradouro());
             address.setCity(viaCepDTO.localidade());
             address.setState(viaCepDTO.uf());
-            address.setDistrict(viaCepDTO.bairro());
 
             addresses.add(address);
         }
