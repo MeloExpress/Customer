@@ -7,6 +7,7 @@ import br.com.MeloExpress.Customer.dto.CustomerDetailsUpdateDTO;
 import br.com.MeloExpress.Customer.dto.CustomerRegisterDTO;
 import br.com.MeloExpress.Customer.exceptions.CustomerNotFoundException;
 import br.com.MeloExpress.Customer.service.CustomerService;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
