@@ -5,6 +5,8 @@ import java.util.UUID;
 
 public record CustomerRegisterDTO(
 
+
+
     String companyName,
     String cnpj,
     String stateRegistration,
